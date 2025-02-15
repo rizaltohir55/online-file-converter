@@ -16,10 +16,34 @@
         p {
             color: #666;
         }
+        form {
+            margin-top: 20px;
+        }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
     <h1>Selamat Datang di Online File Converter</h1>
     <p>Konversi file Anda dengan mudah!</p>
+
+    <!-- Formulir Upload File -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <br>
+        <button type="submit">Unggah File</button>
+    </form>
 </body>
 </html>
