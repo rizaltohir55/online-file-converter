@@ -3,7 +3,6 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer'); // Middleware untuk upload file
 const fs = require('fs'); // Modul untuk membaca/menulis file
-const { promisify } = require('util'); // Untuk menggunakan versi async dari fs
 const sharp = require('sharp'); // Library untuk manipulasi gambar
 
 // Inisialisasi aplikasi Express
@@ -11,10 +10,6 @@ const app = express();
 
 // Set port aplikasi
 const PORT = process.env.PORT || 3000;
-
-// Install sharp untuk manipulasi gambar
-// Jalankan perintah berikut di terminal:
-// npm install sharp
 
 // Konfigurasi Multer untuk menyimpan file di folder 'uploads'
 const storage = multer.diskStorage({
@@ -43,14 +38,19 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     }
 
     const conversionType = req.body.conversionType; // Jenis konversi yang dipilih
+    const outputFormat = req.body.outputFormat; // Format output yang dipilih
     const filePath = req.file.path; // Path file yang diunggah
     const fileName = req.file.filename; // Nama file yang diunggah
     const fileExt = path.extname(fileName).toLowerCase(); // Ekstensi file
 
     try {
         if (conversionType === 'image') {
-            // Konversi gambar ke format lain (misalnya JPG ke PNG)
-            const outputFormat = 'png'; // Format output (bisa diubah sesuai kebutuhan)
+            // Validasi format output
+            if (!['jpg', 'png', 'webp'].includes(outputFormat)) {
+                return res.status(400).send('Format output tidak valid.');
+            }
+
+            // Konversi gambar ke format yang dipilih
             const outputPath = path.join(__dirname, 'uploads', `${Date.now()}-converted.${outputFormat}`);
 
             // Gunakan sharp untuk mengonversi gambar
