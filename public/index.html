@@ -33,6 +33,10 @@
         button:hover {
             background-color: #0056b3;
         }
+        select {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -43,7 +47,16 @@
     <form action="/upload" method="POST" enctype="multipart/form-data">
         <input type="file" name="file" required>
         <br>
-        <button type="submit">Unggah File</button>
+        <label for="conversionType">Pilih Jenis Konversi:</label>
+        <select name="conversionType" id="conversionType">
+            <option value="image">Gambar</option>
+            <option value="document">Dokumen</option>
+            <option value="audio">Audio</option>
+            <option value="video">Video</option>
+            <option value="text">Teks</option>
+        </select>
+        <br><br>
+        <button type="submit">Unggah dan Konversi</button>
     </form>
 </body>
 </html>
